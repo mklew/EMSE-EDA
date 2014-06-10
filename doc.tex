@@ -1,0 +1,172 @@
+% Created 2013-11-12 Tue 20:00
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage[numbers]{natbib}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\author{Marek Lewandowski \\ Jérémy Bossut}
+\date{\today}
+\title{Event driven architectures}
+\begin{document}
+
+\maketitle
+\newpage
+
+\section{Event driven architecture - EDA}
+Definition of event:
+
+\begin{description}
+\item[Event] can be thought of as
+\begin{itemize}
+ \item discrete piece of information describing facts. 
+ \item a notable thing that happens inside or outside your business
+ \end{itemize}
+
+ An event (business or system) may signify a problem or impending problem, an opportunity, a threshold, or a deviation.
+
+ Specification and Occurrence. The term event is often used interchangeably to refer to both the specification (definition) of the event, and each individual occurrence (instance) of the event.
+
+\end{description}
+
+In an event-driven architecture, a notable thing happens inside or outside your business, which disseminates immediately to all interested parties (human or automated). The interested parties evaluate the event, and optionally take action. The event-driven action may include the invocation of a service, the triggering of a business process, and/or further information publication/syndication.
+
+Loose coupling - EDA is extremely loosely coupled, and highly distributed. Creator of the event only knows that event transpired. Does not know about further processing, interested parties and actions taken because of the event.
+
+\subsection{5 principles of EDA}
+\begin{enumerate}
+\item \"Real-time\" events as they happen at the product
+\item Push notifications
+\item One-way fire-and-forget
+\item Immediate action at the consumers 
+\item Informational (\"someone logged in\"), not commands (\"audit this\") 
+\end{enumerate}
+
+\section{Event processing styles}
+There are 3 main event processing styles:
+
+\begin{itemize}
+  \item Simple Event processing
+  \item Stream Event processing
+  \item Complex Event processing
+\end{itemize}
+
+\subsection{Simple Event processing}
+Occurance of the event triggers downstream actions. Simple Event processing is commonly used to drive the real-time flow of work.
+
+For example, in case of e-commerce website
+WHEN payment is received THEN 
+  - send confirmation email
+  - begin delivery of the product
+
+Simple event triggers one or more actions.  
+
+\subsection{Stream Event processing}
+Similar to the simple event processing with the expection that whole sequences of events are considered. For example 5 order events which arrive as the stream to the Event Router might result in router generating new event \emph{EligibleForFreeDelivery}.
+
+\subsection{Complex Event processing}
+Complex Event processing (CEP) combines data from multiple event sources to infer events or patters that suggest more complicated circumstances. 
+  
+Basically CEP analyses series of events, possibly over long period of time to infer interesting facts i.e. multiple frequent requests for a resource might suggest DDoS attack.
+
+The difference from Stream Event processing is that Stream EP does not consider time - it only reacts to that it sees at the given moment in the stream of the events.
+
+\section{Pros and cons of EDA}
+
+Pros:
+\begin{itemize}
+\item Asynchronous flow of work and information - Loose coupling, immediate dispatch of event is a good model for asynchronous processing.
+\item Testing components in isolation - Processing components of the event can be easily tested in isolation by simulating events occurances.
+\item near-real time processing
+\item low latency
+\item high throughput
+\item reactive - immediate processing of the event
+\end{itemize}
+
+Cons:
+\begin{itemize}
+\item No call stack - Call stack is not available, therefore tracing event flow is difficult (requires additional work).
+\item Integration testing is required more than ever - Due to very loosely coupled components integration testing is required. There is much less compile time validation.
+\end{itemize}
+
+\section{Even driven styles}
+Sections discusses several event driven architectural styles.
+
+\subsection{Event Driven SOA}
+Service Oriented Architecture is an synchronous request-response driven architecture which allows to connect remote processes in distributed systems. It offers loose coupling for distributed systems at technical level but tends to create tight coupling for business processes at the functional level.
+
+EDA-SOA is an improvement over SOA. It is based on asynchronous message-driven communication model to propagate information throughout an enterprise
+
+\subsection{Context of application}
+\begin{itemize}
+\item When existing SOA architecture becomes bloatted by cross cutting domain logic and multiple dependencies.
+\item When more scalability is required from existing SOA.
+\end{itemize}
+
+\subsection{Forces}
+SOA is all about diving domain logic into separate systems and exposing it as services. Some domain logic will, by its very nature spead out over many systems. The result is domain pollution and bloat in the SOA systems.
+
+\subsection{Solution}
+SOA is used for seperate systems, but instead of calling other services Event Bus is used as the means of the integration. Domain Events are published on EventBus from services so that other services which subscribe to given domains can execute specific cross cutting logic.
+
+\subsection{Pros and cons}
+Pros:
+\begin{itemize}
+  \item Scalability - In SOA weakest link dictates the peak throughput of the system. In EDA-SOA weakest link dictates the sustained throughput of the system. 
+\end{itemize}
+
+
+\subsection{Enterprise Service Bus}
+
+
+\subsection{Event sourcing}
+All changes in the state are captured as the events. These events are persisted in the event log.
+
+\subsubsection{Context of application}
+Banking applications store all account operations. Current balance (state) of the account is the result of applying these operations. Event sourcing is a good fit.
+
+\subsubsection{Pros and cons}
+
+Pros:
+\begin{itemize}
+  \item Temportal Query - go back in time to specific state of the system
+  \item Rebuild state by inserting or deleting events from the event log
+  \item Event Reply - Run \"What if\" scenarios or corrections to past events
+  \item All information is there. If there is a new feature that requires data analysis 6 months back. In case of non event sourced system it will take 6 months to accumulate that data because all that is tracked is the current state. In case of event sourced, feature can be implemented and run immediately because past information is available.
+\end{itemize}
+
+Cons:
+\begin{itemize}
+  \item Code changes need to take into consideration handling of past events
+  \item Reply of all past events takes time (can be mitigated by taking snapshots of state)
+  \item Possibly running into BigData problems
+\end{itemize}
+
+\subsection{Graphical Interfaces}
+GUI libraries are usually even driven. Graphical Interfaces are a great example of that event driven architectures are not nothing new. 
+
+Components are events generators. There are no event channels. Subscriptions are being made directly on the components.
+
+Why event driven architecture is a good fit for GUI libraries? Because it exactly matches it definition. GUI responds to external events, user stimulus. It does so in a reactive way. Interaction takes place over possibly long period of time.
+
+
+% \begin{figure}[H]
+%   \begin{center}
+%   \fbox{
+%     \includegraphics[width=\textwidth]{diagram.jpg}
+%   }
+%   \end{center}
+%   \caption{Class diagram}
+  
+% \end{figure}
+
+\nocite{*}
+\bibliographystyle{plainnat}
+\bibliography{bibliography}
+\end{document}
