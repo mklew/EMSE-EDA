@@ -25,7 +25,7 @@ Definition of event:
 \begin{description}
 \item[Event] can be thought of as
 \begin{itemize}
- \item discrete piece of information describing facts. 
+ \item discrete piece of information describing facts
  \item a notable thing that happens inside or outside your business
  \end{itemize}
 
@@ -58,7 +58,7 @@ There are 3 main event processing styles:
 \end{itemize}
 
 \subsection{Simple Event processing}
-Occurance of the event triggers downstream actions. Simple Event processing is commonly used to drive the real-time flow of work.
+Occurence of the event triggers downstream actions. Simple Event processing is commonly used to drive the real-time flow of work.
 
 For example, in case of e-commerce website
 WHEN payment is received THEN 
@@ -82,7 +82,7 @@ The difference from Stream Event processing is that Stream EP does not consider 
 Pros:
 \begin{itemize}
 \item Asynchronous flow of work and information - Loose coupling, immediate dispatch of event is a good model for asynchronous processing.
-\item Testing components in isolation - Processing components of the event can be easily tested in isolation by simulating events occurances.
+\item Testing components in isolation - Processing components of the event can be easily tested in isolation by simulating events occurrences.
 \item near-real time processing
 \item low latency
 \item high throughput
@@ -113,7 +113,7 @@ EDA-SOA is an improvement over SOA. It is based on asynchronous message-driven c
 SOA is all about diving domain logic into separate systems and exposing it as services. Some domain logic will, by its very nature spead out over many systems. The result is domain pollution and bloat in the SOA systems.
 
 \subsection{Solution}
-SOA is used for seperate systems, but instead of calling other services Event Bus is used as the means of the integration. Domain Events are published on EventBus from services so that other services which subscribe to given domains can execute specific cross cutting logic.
+SOA is used for seperate systems, but instead of calling other services, Event Bus is used as the means of the integration. Domain Events are published on EventBus from services so that other services which subscribe to given domains can execute specific cross cutting logic.
 
 \subsection{Pros and cons}
 Pros:
@@ -153,7 +153,7 @@ GUI libraries are usually even driven. Graphical Interfaces are a great example 
 
 Components are events generators. There are no event channels. Subscriptions are being made directly on the components.
 
-Why event driven architecture is a good fit for GUI libraries? Because it exactly matches it definition. GUI responds to external events, user stimulus. It does so in a reactive way. Interaction takes place over possibly long period of time.
+Why event driven architecture is a good fit for GUI libraries? Because it exactly matches its definition. GUI responds to external events, user stimulus. It does so in a reactive way. Interaction takes place over possibly long period of time.
 
 
 % \begin{figure}[H]
