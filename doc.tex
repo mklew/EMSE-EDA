@@ -46,11 +46,11 @@ Loose coupling - EDA is extremely loosely coupled, and highly distributed. Creat
 
 \subsection{5 principles of EDA}
 \begin{enumerate}
-\item \"Real-time\" events as they happen at the product
+\item ``Real-time'' events as they happen at the product
 \item Push notifications
 \item One-way fire-and-forget
 \item Immediate action at the consumers 
-\item Informational (\"someone logged in\"), not commands (\"audit this\") 
+\item Informational (``someone logged in''), not commands (``audit this'') 
 \end{enumerate}
 
 \section{Event flow layers}
@@ -71,7 +71,7 @@ They are:
 The event channel, typically a messaging backbone, transports standard formatted events between event generators, event processing engines, and downstream subscribers.
 
 \subsection{Event Processing}
-Events are evaluated aganist event processing rules, and actions are initiated. 
+Events are evaluated against event processing rules, and actions are initiated. 
 
 Actions are:
 \begin{itemize}
@@ -107,7 +107,7 @@ WHEN payment is received THEN
 Simple event triggers one or more actions.  
 
 \subsection{Stream Event processing}
-Similar to the simple event processing with the expection that whole sequences of events are considered. For example 5 order events which arrive as the stream to the Event Router might result in router generating new event \emph{EligibleForFreeDelivery}.
+Similar to the simple event processing with the expection that whole sequences of events are considered. For example five order events which arrive as the stream to the Event Router might result in router generating new event \emph{EligibleForFreeDelivery}.
 
 \subsection{Complex Event processing}
 Complex Event processing (CEP) combines data from multiple event sources to infer events or patters that suggest more complicated circumstances. 
@@ -183,8 +183,8 @@ Pros:
 \begin{itemize}
   \item Temportal Query - go back in time to specific state of the system
   \item Rebuild state by inserting or deleting events from the event log
-  \item Event Reply - Run \"What if\" scenarios or corrections to past events
-  \item All information is there. If there is a new feature that requires data analysis 6 months back. In case of non event sourced system it will take 6 months to accumulate that data because all that is tracked is the current state. In case of event sourced, feature can be implemented and run immediately because past information is available.
+  \item Event Reply - Run ``What if'' scenarios or corrections to past events
+  \item All information is there. If there is a new feature that requires data analysis six months back. In case of non event sourced system it will take six months to accumulate that data because all that is tracked is the current state. In case of event sourced, feature can be implemented and run immediately because past information is available.
 \end{itemize}
 
 Cons:
