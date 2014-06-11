@@ -13,10 +13,15 @@
 
 \author{Marek Lewandowski \\ Jérémy Bossut}
 \date{\today}
-\title{Event driven architectures}
+\title{Event driven architectures \\ \vspace{2 mm} {\large EMSE - Software Architecture}}
+
 \begin{document}
 
 \maketitle
+
+\abstract{In this paper firstly general Event Driven Architecture is overviewed. Then different EDA related styles are discussed. EDA-SOA is improvement over SOA architecture which solves coupling on the business processes and yields higher scalability and performance. Event sourcing allows to describe state as the series of events.}
+
+
 \newpage
 
 \section{Event driven architecture - EDA}
@@ -47,6 +52,40 @@ Loose coupling - EDA is extremely loosely coupled, and highly distributed. Creat
 \item Immediate action at the consumers 
 \item Informational (\"someone logged in\"), not commands (\"audit this\") 
 \end{enumerate}
+
+\section{Event flow layers}
+
+\subsection{Event generators}
+Every event is generated from a source. Source can be datastore, service, business process, sensor, transmitter.
+
+\subsubsection{Event preprocessor}
+Event preprocessors do some work on the events before emitting them into event channel. 
+
+They are:
+\begin{itemize}
+  \item Event router - routes events to different event channels
+  \item Event filter - filters events
+\end{itemize}
+
+\subsection{Event Channel}
+The event channel, typically a messaging backbone, transports standard formatted events between event generators, event processing engines, and downstream subscribers.
+
+\subsection{Event Processing}
+Events are evaluated aganist event processing rules, and actions are initiated. 
+
+Actions are:
+\begin{itemize}
+  \item invoking a service
+  \item publishing event
+  \item initiating business process
+  \item capturing the event for historical purposes
+  \item notifying humans or systems
+\end{itemize}
+
+Events are processed by engines. Simple event processing engine processes each event independently. A complex engine processes new event occurrences in context of prior and future events.
+
+\subsection{Downstream event-driven activity}
+A single event, or event correlation may initiate many downstream activities. The invocation of the activity might be a push by the event processing engine or a pull by subscribers of event publications. Subscribers might be humans, applications, active business processes, data warehouses and more.
 
 \section{Event processing styles}
 There are 3 main event processing styles:
@@ -119,17 +158,24 @@ SOA is used for seperate systems, but instead of calling other services, Event B
 Pros:
 \begin{itemize}
   \item Scalability - In SOA weakest link dictates the peak throughput of the system. In EDA-SOA weakest link dictates the sustained throughput of the system. 
+  \item Handling cross cutting business logic in one place
 \end{itemize}
-
-
-\subsection{Enterprise Service Bus}
-
+Cons:
+\begin{itemize}
+  \item EventBus is another artifact to be managed
+\end{itemize}
 
 \subsection{Event sourcing}
 All changes in the state are captured as the events. These events are persisted in the event log.
 
 \subsubsection{Context of application}
 Banking applications store all account operations. Current balance (state) of the account is the result of applying these operations. Event sourcing is a good fit.
+
+\subsubsection{Forces}
+Need to track every state modification. Highly auditiable, highly trackable systems where every modification can be found.
+
+\subsubsection{Solution}
+Capture state modifications as events.
 
 \subsubsection{Pros and cons}
 
